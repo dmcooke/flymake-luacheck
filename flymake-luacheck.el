@@ -5,7 +5,7 @@
 ;; Author: David M. Cooke <david.m.cooke@gmail.com>
 ;; Version: 0.2
 ;; Created: Oct. 14, 2020
-;; Package-Requires: (flymake)
+;; Package-Requires: (flymake (emacs "25.1"))
 ;; SPDX-License-Identifier: MIT
 ;; Keywords: languages, lua
 
@@ -35,7 +35,7 @@
 ;; If luacheck is not available, luac will be used to check for syntax
 ;; errors.
 ;;
-;; Luacheck is a static analyzer and a linter for Lua. It is available
+;; Luacheck is a static analyzer and a linter for Lua.  It is available
 ;; from <https://github.com/mpeterv/luacheck>.
 ;;
 ;; The function `flymake-luacheck-setup' should be run in the buffer to
@@ -55,6 +55,7 @@
 (require 'rx)
 (require 'pcase)
 (require 'flymake)
+(eval-when-compile (require 'subr-x))
 
 ;;; Code:
 
@@ -83,9 +84,8 @@ current set (from a config file, for instance), rather than replacing it.
 The default `(+ max)' is equivalent to `(+ lua51c lua52c lua53c luajit)'.
 
 If the standard globals are set in a \".luacheckrc\" file, this should be
-set to `nil', which will inhibit adding a \"--std\" option to the luacheck
-command line. (Options on the command line overwrite those in config files.)
-"
+set to nil, which will inhibit adding a \"--std\" option to the luacheck
+command line. (Options on the command line overwrite those in config files.)"
   :group 'flymake-luacheck
   :type '(set symbol)
   :local t)
