@@ -1,0 +1,47 @@
+* flymake-luacheck
+
+** Introduction
+
+This package adds a flymake backend to check [[https://www.lua.org][Lua]] files using
+[[https://github.com/mpeterv/luacheck][luacheck]]. If ~luacheck~ is not available, then ~luac~ will be used to
+check for syntax errors.
+
+** Setup
+
+The function ~flymake-luacheck-setup~ should be run in the buffer to
+be checked before enabling ~flymake-mode~.  For convenience, the
+function ~flymake-luacheck-activate~ will add the backend, and
+turn on ~flymake-mode~.
+
+#+BEGIN_SRC emacs-lisp
+(require 'flymake-luacheck)
+(add-hook 'lua-mode #'flymake-luacheck-activate)
+#+END_SRC
+
+or, using [[https://github.com/jwiegley/use-package][use-package]]:
+
+#+BEGIN_SRC emacs-lisp
+(use-package flymake-luacheck
+  :hook (lua-mode . flymake-luacheck-activate))
+#+END_SRC
+
+You may wish to customize the ~flymake-luacheck-standard-globals~ variable
+to set what ~luacheck~ considers to be the set of standard globals.
+If your project uses a ~.luacheckrc~ file, you may wish to set this
+to ~nil~ in a ~.dir-locals.el~ file
+
+#+BEGIN_SRC emacs-lisp
+((lua-mode . ((flymake-luacheck-standard-globals . nil))))
+#+END_SRC
+
+and set the standard globals set in the ~.luacheckrc~ using the ~std~ variable:
+
+#+BEGIN_SRC lua
+std = "luajit"
+#+END_SRC
+
+** Legal stuff
+
+~flymake-luacheck~ is copyright 2020 by David M. Cooke [[mailto:david.m.cooke@gmail.com][david.m.cooke@gmail.com]],
+and is licensed under the MIT license, the text of which is included in
+the LICENSE file.
